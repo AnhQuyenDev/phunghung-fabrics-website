@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./src/style.css">
-    <title>Outdura: Contact</title>
+    <title>Outdura: Blog</title>
 </head>
 <body>
     <header class="bg-[#0b2b4a] text-white shadow-lg">
@@ -20,10 +21,10 @@
                         <a href="our-collections.html" class="hover:text-yellow-500 transition-colors">Our Collections</a>
                         <a href="design-selector.html" class="hover:text-yellow-500 transition-colors">Design Selector</a>
                         <a href="fabric-care.html" class="hover:text-yellow-500 transition-colors">Fabric Care</a>
-                        <a href="blog.html" class="hover:text-yellow-500 transition-colors">Blog</a>
+                        <a href="blog.html" class="text-yellow-500 transition-colors">Blog</a>
                         <a href="where-to-buy.html" class="hover:text-yellow-500 transition-colors">Where to Buy</a>
                         <a href="faq.html" class="hover:text-yellow-500 transition-colors">FAQ</a>
-                        <a href="contact.html" class="text-yellow-500 transition-colors">Contact</a>
+                        <a href="contact.html" class="hover:text-yellow-500 transition-colors">Contact</a>
                     </nav>
                 </div>
 
@@ -58,103 +59,157 @@
                 <a href="our-collections.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Our Collections</a>
                 <a href="design-selector.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Design Selector</a>
                 <a href="fabric-care.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Fabric Care</a>
-                <a href="blog.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Blog</a>
+                <a href="blog.html" class="px-6 py-3 border-b border-gray-600 text-yellow-500 font-semibold">Blog</a>
                 <a href="where-to-buy.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Where to Buy</a>
                 <a href="faq.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">FAQ</a>
-                <a href="contact.html" class="px-6 py-3 border-gray-600 text-yellow-500 font-semibold">Contact</a>
+                <a href="contact.html" class="px-6 py-3 border-gray-600 hover:bg-gray-700 transition-colors">Contact</a>
             </nav>
         </div>
     </header>
 
-    <section class="py-16 md:py-24">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+    <section class="relative min-h-[600px] md:min-h-[600px] flex items-center">
+        <div class="absolute inset-0 z-0">
+            <img src="public/images/Outdura_ Blog/imgi_10_csm_Factory_All_Video.01_35_17_13.Still118_3f623a5d72.png" 
+                alt="Close-up of threads on a weaving machine" 
+                class="w-full h-full object-cover">
+        </div>    
+        <div class="absolute inset-0 bg-black opacity-40 z-10"></div>
+        <div class="relative z-20 container mx-auto max-w-6xl px-4">         
+            <div class="bg-black/30 p-8 md:p-12 max-w-2xl rounded-sm">          
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white uppercase tracking-wide">
+                    Woven Together
+                </h1>                
+                <p class="mt-4 text-lg text-white font-semibold">
+                    The Outdura Blog
+                </p>               
+                <p class="mt-6 text-base text-gray-200 leading-relaxed">
+                    Our story began nearly 150 years ago and continues today with our commitment to quality, beautifully crafted outdoor fabrics.
+                </p>
+                <p class="mt-4 text-base text-gray-200 leading-relaxed">
+                    Follow our blog to see more of the story we're weaving in North Carolina: behind-the-scenes looks, collection inspiration, industry insights and more.
+                </p>
+            </div>
+        </div>
+    </section>
 
-                <div class="w-full">
-                    <div>
-                        <h2 class="text-3xl font-bold text-[#F37820] tracking-wider">LET'S TALK</h2>
-                        <h3 class="mt-2 text-2xl font-semibold text-[#0b2b4a] tracking-wide">CONNECT WITH THE OUTDURA SALES TEAM</h3>
-                    </div>
+    <section class="py-12 sm:py-16">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div id="filter-container" class="flex flex-wrap justify-center gap-2 mb-12">
+            </div>
 
-                    <form action="#" method="POST" class="mt-8 space-y-5">
-                        
-                        <div>
-                            <label for="name" class="text-sm font-medium text-gray-700">Name *</label>
-                            <input type="text" name="name" id="name" placeholder="Name" required class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                        </div>
+            <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+            </div>
+        </div>
+    </section>
 
-                        <div>
-                            <label for="email" class="text-sm font-medium text-gray-700">E-Mail *</label>
-                            <input type="email" name="email" id="email" placeholder="E-Mail" required class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                        </div>
+    <section class="bg-[#F07C28] py-16 sm:py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-white font-bold text-4xl uppercase tracking-widest mb-12">
+                Series / Trending / Category
+            </h2>
+            <div class="max-w-lg mx-auto">
+                <div class="p-1 inline-block rounded-xl">
+                    <img 
+                        src="public/images/Outdura_ Blog/imgi_8_csm_Factory_All_Video.01_11_40_23.Still101_ac16d90ed0.png" 
+                        alt="Fabric manufacturing machine" 
+                        class="block w-full h-auto rounded-xl"
+                    >
+                </div>
+                
+                <h3 class="text-xl font-bold text-white mt-6">
+                    Our Legacy
+                </h3>
+                
+                <p class="text-white mt-2">
+                    For over 150 years, we've been huge on details.
+                </p>
 
-                        <div>
-                            <label for="company" class="text-sm font-medium text-gray-700">Company</label>
-                            <input type="text" name="company" id="company" placeholder="Company" class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                        </div>
+                <div class="flex flex-wrap justify-center items-center gap-4 mt-8">
+                    <a href="#" class="border border-white text-white font-semibold py-2 px-8 rounded-full text-sm transition-colors duration-300 hover:bg-white hover:text-[#F07C28]">
+                        Legacy
+                    </a>
+                    <a href="#" class="border border-white text-white font-semibold py-2 px-8 rounded-full text-sm transition-colors duration-300 hover:bg-white hover:text-[#F07C28]">
+                        History
+                    </a>
+                    <a href="#" class="border border-white text-white font-semibold py-2 px-8 rounded-full text-sm transition-colors duration-300 hover:bg-white hover:text-[#F07C28]">
+                        About
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div>
-                            <label for="address" class="text-sm font-medium text-gray-700">Address</label>
-                            <input type="text" name="address" id="address" placeholder="Address" class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                        </div>
+    <section class="bg-gray-100 py-16 sm:py-20">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
 
-                        <div>
-                            <label for="city" class="text-sm font-medium text-gray-700">City</label>
-                            <input type="text" name="city" id="city" placeholder="City" class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                        </div>
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-[#0b2b4a] uppercase leading-tight">
+                        Over five generations of expertise and passion
+                    </h2>
+                </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label for="state" class="text-sm font-medium text-gray-700">State *</label>
-                                <input type="text" name="state" id="state" placeholder="State" required class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                            </div>
-                            <div>
-                                <label for="postal-code" class="text-sm font-medium text-gray-700">Postal Code</label>
-                                <input type="text" name="postal-code" id="postal-code" placeholder="Postal Code" class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                            </div>
-                        </div>
+                <div class="bg-white p-8 lg:p-10 shadow-lg rounded-md w-full mx-auto md:mx-0">
+                    <h3 class="font-bold text-gray-800 uppercase tracking-wider">Never Miss a Post</h3>
+                    <p class="mt-2 text-gray-600 text-sm">
+                        Sign up for Outdura news, insights, industry trends and product tips.
+                    </p>
 
-                        <div>
-                            <label for="country" class="text-sm font-medium text-gray-700">Country</label>
-                            <select id="country" name="country" class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 pb-2 bg-transparent">
-                                <option>United States</option>
-                                <option>Canada</option>
-                                <option>Mexico</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label for="phone" class="text-sm font-medium text-gray-700">Phone Number</label>
-                            <input type="tel" name="phone" id="phone" placeholder="Phone Number" class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2">
-                        </div>
-
-                        <div>
-                            <label for="request" class="text-sm font-medium text-gray-700">Describe your request *</label>
-                            <textarea name="request" id="request" placeholder="Describe your request" rows="3" required class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2"></textarea>
-                        </div>
-                        
-                        <div>
-                            <label for="comments" class="text-sm font-medium text-gray-700">Questions or Comments</label>
-                            <textarea name="comments" id="comments" placeholder="Questions or Comments" rows="3" class="mt-1 block w-full border-b-2 border-gray-300 focus:border-[#F37820] focus:ring-0 focus:outline-none pb-2"></textarea>
-                        </div>
-                        
-                        <p class="text-xs text-gray-500 pt-4">
-                            You can find our privacy policy with information on data processing and your rights at <a href="#" class="text-[#0b2b4a] underline">https://www.outdura.com/residential/privacy-policy</a>
-                        </p>
-
-                        <div class="flex justify-center mt-6">
-                            <button type="submit" class="inline-block bg-[#F37820] text-white font-bold py-3 px-10 rounded hover:bg-orange-500 transition-colors duration-300">
-                                SUBMIT
+                    <form action="#" method="POST" class="mt-6">
+                        <div class="flex items-stretch">
+                            <label for="email-address" class="sr-only">Email address</label>
+                            <input 
+                                type="email" 
+                                name="email-address" 
+                                id="email-address" 
+                                autocomplete="email" 
+                                required 
+                                class="flex-grow bg-gray-100 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-300 rounded-l-md px-4 text-sm" 
+                                placeholder="Enter email"
+                            >
+                            <button 
+                                type="submit" 
+                                class="bg-[#F07C28] text-white font-bold uppercase py-3 px-6 rounded-r-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#F07C28] transition-colors"
+                            >
+                                Join
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <div class="w-full h-full min-h-[400px] lg:min-h-full">
-                    <img src="public/images/Outdura_ Contact/imgi_2_csm_GettyImages-1294144620_f97fe3dff6.png" alt="Happy couple shaking hands with a professional" class="w-full h-full object-cover rounded-lg">
-                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="py-16 md:py-24">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <a href="#" class="group bg-gray-100 p-8 md:p-12 text-center rounded-lg transition-transform duration-300 ease-in-out hover:-translate-y-2 flex flex-col">
+                    <div>
+                        <h3 class="text-2xl font-bold text-[#0b2b4a] uppercase tracking-wider mb-4">
+                            Where to buy Outdura Fabrics
+                        </h3>
+                        <p class="text-gray-600 mb-8">
+                            Find select retailers who offer Outdura Fabric options for their furniture collections.
+                        </p>
+                    </div>
+                    <span class="inline-block bg-[#E9842B] text-white font-bold py-3 px-8 rounded transition-colors duration-300 group-hover:bg-orange-500 mt-auto">
+                        SHOW ME
+                    </span>
+                </a>
+                <a href="#" class="group bg-gray-100 p-8 md:p-12 text-center rounded-lg transition-transform duration-300 ease-in-out hover:-translate-y-2 flex flex-col">
+                    <div>
+                        <h3 class="text-2xl font-bold text-[#0b2b4a] uppercase tracking-wider mb-4">
+                            Here for you
+                        </h3>
+                        <p class="text-gray-600 mb-8">
+                            We're here to answer any questions and receive any feedback you may have.
+                        </p>
+                    </div>
+                    <span class="inline-block bg-[#E9842B] text-white font-bold py-3 px-8 rounded transition-colors duration-300 group-hover:bg-orange-500 mt-auto">
+                        CONTACT US
+                    </span>
+                </a>
             </div>
         </div>
     </section>

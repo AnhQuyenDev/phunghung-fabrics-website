@@ -10,3 +10,15 @@ body {
 .tab-content.hidden {
     display: none;
 }
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.filter-btn.active {
+    background-color: #F07C28;
+    color: white;
+    border-color: #F07C28;
+}
