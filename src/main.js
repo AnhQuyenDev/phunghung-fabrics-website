@@ -403,3 +403,228 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+// ================== Page Fabric Care: Xử lí chuyển tab và hiển thị nội dung video ==================
+
+document.addEventListener('DOMContentLoaded', function () {
+    // --- DỮ LIỆU MẪU CHO CÁC LOẠI VẾT BẨN ---
+    // QUAN TRỌNG: Thêm thuộc tính 'videoUrl' cho mỗi đối tượng.
+    // - Nếu video từ Youtube, hãy lấy link "Embed".
+    // - Nếu video là file tự host, hãy điền đường dẫn tới file (ví dụ: '/videos/coke.mp4').
+    const stainData = {
+        'TEXGARD® Cleaner & TEXGARD® Protector': {
+            videoUrl: 'public/videos/Outdura_Cleaning-Care_Parasol.mp4', // VÍ DỤ: link Youtube Embed
+            cleaningSteps: [
+                'Immerse spills with a brush.', 'Blot the fabric thoroughly, removing all residue.',
+                'Spray TEXGARD® CLEANER onto the wet stained area.', 'Let soak in for 1-2 minutes.',
+                'Work in with a sponge or a soft bristling pad.', 'Rinse the fabric thoroughly with clean water.',
+                'Let fabric air dry completely.',
+            ],
+            whatYouNeed: ['Soft brush', 'Absorbent pad (if available)', 'TEXGARD® CLEANER', 'Sponge or scrubbing pad', 'TEXGARD® PROTECTOR'],
+        },
+        'Beer': {
+            videoUrl: 'public/videos/Beer_small720p.mp4',
+            cleaningSteps: [
+                'Blot up excess beer immediately.', 'Mix mild soap with lukewarm water.',
+                'Gently scrub the stain with a soft brush.', 'Rinse thoroughly with clean water.', 'Air dry.',
+            ],
+            whatYouNeed: ['Clean towel', 'Mild soap', 'Soft brush', 'Water'],
+        },
+        'Coca-Cola': {
+            videoUrl: 'public/videos/Coca-Cola_small720p.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Chocolate': {
+            videoUrl: 'public/videos/Cleaning_Chocolate.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Coffee': {
+            videoUrl: 'public/videos/Coffee_small720p.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Ice cream': {
+            videoUrl: 'public/videos/Cleaning_Ice_Cream.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Ketchup': {
+            videoUrl: 'public/videos/Ketchup_small720p.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Milk': {
+            videoUrl: 'public/videos/Milk_small720p.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Mud': {
+            videoUrl: 'public/videos/Cleaning_Mud.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Mustard': {
+            videoUrl: 'public/videos/Cleaning_Mustard.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Orange Juice': {
+            videoUrl: 'public/videos/Orange_Juice_small720p.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Pen': {
+            videoUrl: 'public/videos/Cleaning_Pen.mp4',
+            cleaningSteps: [
+                'Act quickly, blot the spill.', 'Apply a solution of water and white vinegar.',
+                'Blot again with a dry cloth.', 'Rinse with water.',
+            ],
+            whatYouNeed: ['Paper towels', 'White vinegar', 'Water'],
+        },
+        'Red Wine': { 
+            videoUrl: 'public/videos/Red_wine_small720p.mp4',
+            cleaningSteps: ['Step A for Wine', 'Step B for Wine'], 
+            whatYouNeed: ['Salt', 'Club Soda'] 
+        },
+    };
+
+    // --- LOGIC CHUYỂN TAB (Không thay đổi) ---
+    const tabs = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = document.querySelector(tab.dataset.tabTarget);
+            tabs.forEach(t => {
+                t.classList.remove('active', 'bg-white', 'text-orange-600');
+                t.classList.add('bg-orange-300', 'text-white');
+            });
+            tabContents.forEach(tc => tc.classList.add('hidden'));
+            tab.classList.add('active', 'bg-white', 'text-orange-600');
+            tab.classList.remove('bg-orange-300', 'text-white');
+            target.classList.remove('hidden');
+        });
+    });
+
+    // --- LOGIC DROPDOWN VÀ ĐỔ DỮ LIỆU ĐỘNG ---
+    const dropdown = document.getElementById('stain-dropdown');
+    const dropdownBtn = document.getElementById('stain-dropdown-btn');
+    const selectedStainEl = document.getElementById('selected-stain');
+    const stainOptionsContainer = document.getElementById('stain-options');
+    const dropdownArrow = document.getElementById('dropdown-arrow');
+
+    const videoPlayBtn = document.getElementById('video-play-btn');
+    const thumbnailContainer = document.getElementById('video-thumbnail-container');
+    const iframeContainer = document.getElementById('video-iframe-container');
+    
+    let currentVideoUrl = '';
+
+    // Tạo các mục lựa chọn cho dropdown
+    Object.keys(stainData).forEach(stainName => {
+        const option = document.createElement('a');
+        option.href = '#';
+        option.textContent = stainName;
+        option.className = 'block px-4 py-3 hover:bg-orange-100 text-gray-700';
+        option.dataset.stain = stainName;
+        stainOptionsContainer.appendChild(option);
+    });
+    
+    // Hàm reset và cập nhật nội dung
+    function updateStainInfo(stainName) {
+        const data = stainData[stainName];
+        if (!data) return;
+
+        // Reset trình phát video về trạng thái thumbnail
+        iframeContainer.innerHTML = ''; // Xóa video đang phát (nếu có)
+        thumbnailContainer.style.display = 'block'; // Hiện lại thumbnail
+        document.getElementById('video-thumbnail').src = data.videoThumbnail;
+        currentVideoUrl = data.videoUrl; // Lưu URL video hiện tại
+
+        // Cập nhật text của dropdown
+        selectedStainEl.textContent = stainName;
+        
+        // Cập nhật các bước làm sạch và những thứ cần thiết
+        document.getElementById('cleaning-steps').innerHTML = data.cleaningSteps.map(step => `<li>${step}</li>`).join('');
+        document.getElementById('what-you-need').innerHTML = data.whatYouNeed.map(item => `<li>${item}</li>`).join('');
+    }
+
+    // Sự kiện click nút Play
+    videoPlayBtn.addEventListener('click', () => {
+        thumbnailContainer.style.display = 'none'; // Ẩn thumbnail
+        iframeContainer.innerHTML = ''; // Dọn dẹp trước khi chèn video mới
+
+        let videoPlayer;
+        if (currentVideoUrl.includes('youtube.com')) {
+            // Tạo iframe cho Youtube
+            videoPlayer = document.createElement('iframe');
+            videoPlayer.setAttribute('src', currentVideoUrl + '?autoplay=1&modestbranding=1&rel=0');
+            videoPlayer.setAttribute('frameborder', '0');
+            videoPlayer.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            videoPlayer.setAttribute('allowfullscreen', '');
+        } else {
+            // Tạo thẻ <video> cho file MP4
+            videoPlayer = document.createElement('video');
+            videoPlayer.setAttribute('src', currentVideoUrl);
+            videoPlayer.setAttribute('controls', '');
+            videoPlayer.setAttribute('autoplay', '');
+        }
+        videoPlayer.className = 'w-full h-full';
+        iframeContainer.appendChild(videoPlayer);
+    });
+
+    // Sự kiện mở/đóng và chọn mục trong dropdown
+    dropdownBtn.addEventListener('click', () => {
+        stainOptionsContainer.classList.toggle('hidden');
+        dropdownArrow.classList.toggle('rotate-180');
+    });
+
+    stainOptionsContainer.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (e.target.tagName === 'A') {
+            const selectedStain = e.target.dataset.stain;
+            updateStainInfo(selectedStain);
+            stainOptionsContainer.classList.add('hidden');
+            dropdownArrow.classList.remove('rotate-180');
+        }
+    });
+    
+    document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+            stainOptionsContainer.classList.add('hidden');
+            dropdownArrow.classList.remove('rotate-180');
+        }
+    });
+
+    // Khởi tạo nội dung mặc định
+    const defaultStain = Object.keys(stainData)[0];
+    updateStainInfo(defaultStain);
+});
