@@ -146,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// ================== Page Blog: Xử lí hiển thị blog ==================
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -367,4 +368,38 @@ document.addEventListener('DOMContentLoaded', function () {
     renderFilters(); // Tạo các nút lọc
     renderPosts(blogPosts); // Hiển thị tất cả bài viết lúc đầu
 
+});
+
+
+
+// ================== Page where to buy: Xử lí hiển thị nội dung động của footer ==================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.where-to-buy-btn');
+    const dynamicSection = document.getElementById('dynamic-content-section');
+    const contentPanels = document.querySelectorAll('.dynamic-content');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Lấy ID của nội dung mục tiêu từ thuộc tính data-target của nút
+            const targetId = this.getAttribute('data-target');
+            const targetPanel = document.getElementById(targetId);
+
+            // 1. Hiển thị section chứa nội dung động
+            dynamicSection.classList.remove('hidden');
+
+            // 2. Ẩn tất cả các khối nội dung
+            contentPanels.forEach(panel => {
+                panel.classList.add('hidden');
+            });
+
+            // 3. Hiển thị khối nội dung mục tiêu
+            if (targetPanel) {
+                targetPanel.classList.remove('hidden');
+            }
+            
+            // Tùy chọn: Cuộn trang tới section vừa hiển thị
+            dynamicSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
 });

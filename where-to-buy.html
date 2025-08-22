@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./src/style.css">
+    <title>Outdura: Blog</title>
+</head>
+<body>
+    <header class="bg-[#0b2b4a] text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center items-center h-20">
+                <div class="flex items-center space-x-8">
+                    <a href="#" class="font-bold tracking-wider">
+                        <img class="max-h-12 md:max-h-14 lg:max-h-16 h-auto w-auto align-top" src="public/images/Outdura_ Outdura Fabrics/imgi_1_logo-outdura.png" alt="logo">
+                    </a>
+
+                    <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                        <a href="outdura-fabrics.html" class="hover:text-yellow-500">Outdura Fabrics</a>
+                        <a href="our-collections.html" class="hover:text-yellow-500 transition-colors">Our Collections</a>
+                        <a href="design-selector.html" class="hover:text-yellow-500 transition-colors">Design Selector</a>
+                        <a href="fabric-care.html" class="hover:text-yellow-500 transition-colors">Fabric Care</a>
+                        <a href="blog.html" class="hover:text-yellow-500 transition-colors">Blog</a>
+                        <a href="where-to-buy.html" class="text-yellow-500 transition-colors">Where to Buy</a>
+                        <a href="faq.html" class="hover:text-yellow-500 transition-colors">FAQ</a>
+                        <a href="contact.html" class="hover:text-yellow-500 transition-colors">Contact</a>
+                    </nav>
+                </div>
+
+                <div class="flex items-center space-x-4 ml-auto md:ml-8 lg:ml-14">
+                    <div class="relative">
+                        <button id="search-toggle" class="bg-yellow-500 p-3 rounded-md hover:bg-yellow-600 transition-colors focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                        
+                        <div id="search-bar" class="hidden absolute right-0 top-full mt-3 z-10">
+                           <input type="search" placeholder="Search..." class="w-64 p-3 text-gray-900 border-2 border-yellow-500 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        </div>
+                    </div>
+
+                    <button id="menu-toggle" class="md:hidden bg-yellow-500 p-3 rounded-md hover:bg-yellow-600 transition-colors focus:outline-none">
+                        <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                        <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-800 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-[#3c5a7d] text-left">
+            <nav class="flex flex-col">
+                <a href="outdura-fabrics.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Outdura Fabrics</a>
+                <a href="our-collections.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Our Collections</a>
+                <a href="design-selector.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Design Selector</a>
+                <a href="fabric-care.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Fabric Care</a>
+                <a href="blog.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">Blog</a>
+                <a href="where-to-buy.html" class="px-6 py-3 border-b border-gray-600 text-yellow-500 font-semibold">Where to Buy</a>
+                <a href="faq.html" class="px-6 py-3 border-b border-gray-600 hover:bg-gray-700 transition-colors">FAQ</a>
+                <a href="contact.html" class="px-6 py-3 border-gray-600 hover:bg-gray-700 transition-colors">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="py-16">
+        <div class="container mx-auto px-6 max-w-7xl text-center">
+            <h2 class="text-3xl font-bold mb-12 uppercase" style="color: #F07C28;">WHERE TO BUY</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <div class="bg-gray-100 p-8 hover:bg-gray-200 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#1a2b3c]">FABRIC RETAILERS</h3>
+                        <p class="text-gray-600 mb-6">Find the companies that offer small quantities and accessories for small projects and DIY projects.</p>
+                    </div>
+                    <button data-target="content-retailers" class="where-to-buy-btn mt-auto bg-[#F07C28] text-white font-bold py-3 px-12 transition-colors hover:bg-orange-600">EXPLORE</button>
+                </div>
+                
+                <div class="bg-gray-100 p-8 hover:bg-gray-200 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#1a2b3c]">FABRIC DISTRIBUTOR</h3>
+                        <p class="text-gray-600 mb-6">Full rolls, fast delivery - you are in the right place with our distributors.</p>
+                    </div>
+                    <button data-target="content-distributors" class="where-to-buy-btn mt-auto bg-[#F07C28] text-white font-bold py-3 px-12 transition-colors hover:bg-orange-600">EXPLORE</button>
+                </div>
+                
+                <div class="bg-gray-100 p-8 hover:bg-gray-200 hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-[#1a2b3c]">FURNITURE RETAILERS</h3>
+                        <p class="text-gray-600 mb-6">Find retailers near you who sell furniture using Outdura fabrics.</p>
+                    </div>
+                    <button data-target="content-furniture" class="where-to-buy-btn mt-auto bg-[#F07C28] text-white font-bold py-3 px-12 transition-colors hover:bg-orange-600">EXPLORE</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="dynamic-content-section" class="bg-[#1a2b3c] text-gray-300 py-16">
+        <div class="container mx-auto px-6 max-w-7xl">
+
+            <div id="content-distributors" class="dynamic-content hidden">
+                <h2 class="text-center text-3xl font-bold text-white mb-12 uppercase">FABRIC DISTRIBUTOR</h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="flex items-start gap-6">
+                         <img src="public/images/Outdura_ Where to Buy/imgi_4_csm_2229_LM_20190404_Sattler_Goessendorf_Werk-Edit_22f2a370c1.png" alt="Warehouse" class="w-1/2 flex-shrink-0 rounded-xl">
+                         <p class="text-sm">If you are looking for whole rolls of Sattler & Outdura fabrics, you have come to the right place. Whether you are looking for a solid, striped or jacquard pattern, with our help you can get full rolls and satisfy your customer project.</p>
+                    </div>
+                    <div class="flex items-center justify-center gap-2 md:gap-4">
+                        <div class="p-2 md:p-4 bg-white rounded-xl"><img src="public/images/Outdura_ Where to Buy/imgi_5_csm_Logo-Veteran_b249483849.png" alt="Veteran Logo"></div>
+                        <div class="p-2 md:p-4 bg-white rounded-xl"><img src="public/images/Outdura_ Where to Buy/imgi_6_csm_Logo-Action-Upholstery_7ffb63eeb1.png" alt="Action Logo"></div>
+                        <div class="p-2 md:p-4 bg-white rounded-xl"><img src="public/images/Outdura_ Where to Buy/imgi_7_csm_Logo_Justwholesale_4-3_f1db3f20ef.png" alt="Quest Logo"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-retailers" class="dynamic-content">
+                <h2 class="text-center text-3xl font-bold text-white mb-12 uppercase">FABRIC RETAILERS</h2>    
+                <div class="flex flex-col md:flex-row gap-12 items-center justify-center max-w-5xl mx-auto">            
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6 max-w-lg">
+                        <img src="public/images/Outdura_ Where to Buy/imgi_2_csm_GettyImages-2173880983_854ee38f0a.png" alt="Sewing Machine" class="w-56 h-auto flex-shrink-0 rounded-xl">
+                        <p class="text-sm text-center md:text-left">This fabric excels for any project, no matter how small, in both indoor and outdoor furniture. While Sattler offers materials for sun protection or marine applications, Outdura is the top choice for durable upholstery for outdoor furniture. What both have in common is the high quality 100% solution-dyed acrylic.</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="p-4 bg-white rounded-xl">
+                            <img src="public/images/Outdura_ Where to Buy/imgi_3_csm_Logo_Sailrite_HG_84032bbedb.png" alt="Sailrite Logo" class="w-56 h-auto rounded-xl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-furniture" class="dynamic-content hidden">
+                 <div class="text-center max-w-3xl mx-auto">
+                    <p class="mb-4 uppercase">CONTACT THE RETAIL STORE DIRECTLY TO ASK IF THEY CARRY OUTDURA FABRICS.</p>
+                    <p class="mb-8 text-sm">Our store locator is a service provided by Google Maps. By using this service you agree to the <a href="#" class="underline">Google Maps Terms of Service</a> and <a href="#" class="underline">Privacy Policy</a>.</p>
+                    <button class="bg-[#F07C28] text-white font-bold py-3 px-12 transition-colors hover:bg-orange-600">LOAD STORES</button>
+                 </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-[#1a2b3c] text-gray-300 py-12">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+                <div class="lg:col-span-1">
+                    <a href="#" class="mb-6 block">
+                         <img src="public/images/Outdura_ Outdura Fabrics/imgi_1_logo-outdura.png" alt="Outdura Logo" class="h-16 w-auto">
+                    </a>
+                    <address class="not-italic text-sm leading-relaxed">
+                        <p class="text-white">Sattler Corp.</p>
+                        <p class="text-white">447 Main Street</p>
+                        <p class="text-white">Hudson, N.C. 28638</p>
+                    </address>
+                    <a href="mailto:sales-usa@sattler.com" class="mt-4 inline-block text-sm underline hover:text-white transition-colors">
+                        sales-usa@sattler.com
+                    </a>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <nav>
+                        <a href="#" class="block mb-2 text-white font-bold hover:text-yellow-500 hover:translate-x-1 transition-all duration-300">Privacy Policy</a>
+                        <a href="#" class="block mb-2 text-white font-bold hover:text-yellow-500 hover:translate-x-1 transition-all duration-300">Terms of Use</a>
+                        <a href="#" class="block mb-2 text-white font-bold hover:text-yellow-500 hover:translate-x-1 transition-all duration-300">Imprint</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <p class="font-semibold text-white mb-4">Connect With Us</p>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#" aria-label="Facebook" class="hover:text-yellow-500 transition-opacity">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.35C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.732 0 1.325-.593 1.325-1.325V1.325C24 .593 23.407 0 22.675 0Z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="hover:text-yellow-500 transition-opacity">
+                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.012 3.584-.07 4.85c-.148 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.645-.07-4.85s.012-3.584.07-4.85c.148-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069ZM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.667-.014 4.947-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.687.073-4.947s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.667.014 15.259 0 12 0Zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm4.965-10.405a1.44 1.44 0 1 1 2.88 0 1.44 1.44 0 0 1-2.88 0Z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <a href="#" class="inline-block w-full text-center border border-gray-400 text-white font-semibold py-3 px-6 hover:bg-white hover:text-[#1a2b3c] transition-all duration-300">
+                        SIGN UP FOR EMAIL
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="src/main.js"></script>
+</body>
+</html>
