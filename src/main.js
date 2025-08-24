@@ -628,3 +628,313 @@ document.addEventListener('DOMContentLoaded', function () {
     const defaultStain = Object.keys(stainData)[0];
     updateStainInfo(defaultStain);
 });
+
+
+// ================== Page Our Collections: Xử lí nội dung 3D và chọn vải ==================
+
+
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+// --- CÀI ĐẶT VÀ KHAI BÁO BIẾN ---
+
+// 1. Mảng chứa tất cả tên file vải
+const fabricFiles = [
+    '0520.jpg', '0526.jpg', '0839.jpg', '11015.jpg', '11304.jpg', 
+    '11311.jpg', '11312.jpg', '11316.jpg', '11500.jpg', '11602.jpg', 
+    '11802.jpg', '11804.jpg', '12101.jpg', '12102.jpg', '12103.jpg', 
+    '1315.jpg', '1317.jpg', '1320.jpg', '1324.jpg', '1327.jpg', 
+    '1328.jpg', '1329.jpg', '1330.jpg', '1331.jpg', '1510.jpg', 
+    '1513.jpg', '1702.jpg', '1706.jpg', '1710.jpg', '1712.jpg', 
+    '1713.jpg', '1718.jpg', '1723.jpg', '1726.jpg', '1728.jpg', 
+    '1732.jpg', '1743.jpg', '1753.jpg', '1904.jpg', '1905.jpg', 
+    '1911.jpg', '1919.jpg', '1923.jpg', '1929.jpg', '213J.jpg', 
+    '2662.jpg', '2663.jpg', '2664.jpg', '2665.jpg', '2666.jpg', 
+    '2667.jpg', '2668.jpg', '2669.jpg', '2670.jpg', '2671.jpg', 
+    '3274.jpg', '3715.jpg', '3717.jpg', '3816.jpg', '3817.jpg', 
+    '3818.jpg', '3819.jpg', '3820.jpg', '3821.jpg', '3822.jpg', 
+    '5401.jpg', '5402.jpg', '5403.jpg', '5404.jpg', '5405.jpg', 
+    '5407.jpg', '5409.jpg', '5410.jpg', '5411.jpg', '5412.jpg', 
+    '5413.jpg', '5414.jpg', '5415.jpg', '5420.jpg', '5426.jpg', 
+    '5432.jpg'
+];
+
+// Cài đặt phân trang
+const ITEMS_PER_PAGE = 12; // Hiển thị 10 vải mỗi trang
+const totalPages = Math.ceil(fabricFiles.length / ITEMS_PER_PAGE);
+const basePath = '/public/images/fabrics/';
+
+// Biến để theo dõi trang hiện tại của mỗi palette
+let sofaCurrentPage = 1;
+let pillowCurrentPage = 1;
+
+// Lấy các phần tử DOM
+const ui = {
+    sofa: {
+        grid: document.querySelector('#sofa-palette .grid'),
+        pageInfo: document.getElementById('sofa-page-info'),
+        prevBtn: document.getElementById('sofa-prev-btn'),
+        nextBtn: document.getElementById('sofa-next-btn')
+    },
+    pillow: {
+        grid: document.querySelector('#pillow-palette .grid'),
+        pageInfo: document.getElementById('pillow-page-info'),
+        prevBtn: document.getElementById('pillow-prev-btn'),
+        nextBtn: document.getElementById('pillow-next-btn')
+    }
+};
+
+// --- HÀM RENDER VÀ GÁN SỰ KIỆN ---
+
+/**
+ * Hàm render các mẫu vải cho một trang cụ thể
+ * @param {object} paletteUI - Đối tượng UI cho palette (ví dụ: ui.sofa)
+ * @param {number} page - Số trang cần render
+ */
+function renderPalettePage(paletteUI, page) {
+    if (!paletteUI.grid) return;
+
+    // Xóa nội dung cũ
+    paletteUI.grid.innerHTML = '';
+    
+    // Tính toán các item cho trang này
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const pageItems = fabricFiles.slice(startIndex, endIndex);
+
+    // Tạo chuỗi HTML cho các item của trang
+    let pageHTML = '';
+    pageItems.forEach(fileName => {
+        const texturePath = basePath + fileName;
+        pageHTML += `
+            <div class="w-10 h-10 rounded-full cursor-pointer border-2 border-gray-100 bg-cover bg-center transition-transform duration-200 hover:scale-110 hover:shadow-lg" 
+                 data-texture="${texturePath}" 
+                 style="background-image: url(${texturePath});">
+            </div>
+        `;
+    });
+    
+    // Đổ HTML vào grid
+    paletteUI.grid.innerHTML = pageHTML;
+
+    // Cập nhật thông tin trang và trạng thái nút
+    paletteUI.pageInfo.textContent = `Page ${page} of ${totalPages}`;
+    paletteUI.prevBtn.disabled = page === 1;
+    paletteUI.nextBtn.disabled = page === totalPages;
+    paletteUI.prevBtn.style.cursor = (page === 1) ? 'not-allowed' : 'pointer';
+    paletteUI.nextBtn.style.cursor = (page === totalPages) ? 'not-allowed' : 'pointer';
+}
+
+// Gán sự kiện cho các nút của Sofa Palette
+ui.sofa.nextBtn.addEventListener('click', () => {
+    if (sofaCurrentPage < totalPages) {
+        sofaCurrentPage++;
+        renderPalettePage(ui.sofa, sofaCurrentPage);
+    }
+});
+
+ui.sofa.prevBtn.addEventListener('click', () => {
+    if (sofaCurrentPage > 1) {
+        sofaCurrentPage--;
+        renderPalettePage(ui.sofa, sofaCurrentPage);
+    }
+});
+
+// Gán sự kiện cho các nút của Pillow Palette
+ui.pillow.nextBtn.addEventListener('click', () => {
+    if (pillowCurrentPage < totalPages) {
+        pillowCurrentPage++;
+        renderPalettePage(ui.pillow, pillowCurrentPage);
+    }
+});
+
+ui.pillow.prevBtn.addEventListener('click', () => {
+    if (pillowCurrentPage > 1) {
+        pillowCurrentPage--;
+        renderPalettePage(ui.pillow, pillowCurrentPage);
+    }
+});
+
+
+// --- KHỞI CHẠY LẦN ĐẦU ---
+// Render trang đầu tiên cho cả hai palette khi tải trang
+renderPalettePage(ui.sofa, 1);
+renderPalettePage(ui.pillow, 1);
+
+// Lấy container chính để làm cơ sở cho mọi thứ
+const container = document.getElementById('sofa-customizer-container');
+
+// --- PHẦN 1: LOGIC 3D (ĐÃ CẬP NHẬT) ---
+let scene, camera, renderer, controls;
+const textureLoader = new THREE.TextureLoader();
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+let sofaParts = [];
+let pillowParts = [];
+let activeSelection = null;
+
+function init3D() {
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xdde2e8);
+    
+    // Lấy canvas từ bên trong container
+    const canvas = container.querySelector('#bg-canvas');
+    
+    // Cập nhật camera aspect ratio dựa trên kích thước canvas
+    camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+    camera.position.set(-100, 120, 100);
+
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    // Cập nhật kích thước renderer dựa trên kích thước canvas
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
+    directionalLight.position.set(5, 10, 7.5);
+    scene.add(directionalLight);
+
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.target.set(0, 0.5, 0);
+
+    const loader = new GLTFLoader();
+    loader.load('public/sofa_pillow.glb', function (gltf) {
+        const model = gltf.scene;
+        scene.add(model);
+        const specificSofaNames = ['Material2040', 'Material2039', 'Material2038', 'Material2045', 'Material2046'];
+        model.traverse(function (child) {
+            if (child.isMesh) {
+                child.material = child.material.clone();
+                if (specificSofaNames.includes(child.name)) sofaParts.push(child);
+                else if (child.name.startsWith('Object_8')) pillowParts.push(child);
+            }
+        });
+    });
+
+    // Thay vì window, resize observer theo dõi sự thay đổi kích thước của canvas
+    new ResizeObserver(onCanvasResize).observe(canvas);
+    canvas.addEventListener('click', onObjectClick3D, false);
+    animate();
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+}
+
+// CẬP NHẬT: Hàm resize giờ dựa trên canvas
+function onCanvasResize() {
+    const canvas = renderer.domElement;
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+}
+
+// CẬP NHẬT: Tính toán tọa độ chuột dựa trên vị trí canvas
+function onObjectClick3D(event) {
+    const canvas = renderer.domElement;
+    const rect = canvas.getBoundingClientRect(); // Lấy thông tin vị trí và kích thước của canvas
+    
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects([...sofaParts, ...pillowParts]);
+
+    if (intersects.length > 0) {
+        const clickedObject = intersects[0].object;
+        if (sofaParts.includes(clickedObject)) {
+            activeSelection = 'sofa';
+            setActive(sofaSelector, true);
+            setActive(pillowSelector, false);
+        } else if (pillowParts.includes(clickedObject)) {
+            activeSelection = 'pillow';
+            setActive(pillowSelector, true);
+            setActive(sofaSelector, false);
+        }
+        updateHighlight3D();
+    }
+}
+
+function updateHighlight3D() {
+    [...sofaParts, ...pillowParts].forEach(part => part.material.emissive.set(0x000000));
+}
+
+function applyTextureToGroup(partsGroup, texturePath) {
+        textureLoader.load(texturePath, function(loadedTexture) {
+        loadedTexture.wrapS = THREE.RepeatWrapping;
+        loadedTexture.wrapT = THREE.RepeatWrapping;
+        loadedTexture.repeat.set(5, 5);
+        loadedTexture.encoding = THREE.sRGBEncoding;
+        partsGroup.forEach(child => {
+            child.material.map = loadedTexture;
+            child.material.color.set(0xffffff);
+            child.material.needsUpdate = true;
+        });
+    });
+}
+
+// --- PHẦN 2: LOGIC UI (Không đổi nhiều) ---
+const sofaSelector = container.querySelector('#sofa-selector');
+const pillowSelector = container.querySelector('#pillow-selector');
+const sofaSwatch = container.querySelector('#sofa-swatch');
+const pillowSwatch = container.querySelector('#pillow-swatch');
+const sofaPalette = container.querySelector('#sofa-palette');
+const pillowPalette = container.querySelector('#pillow-palette');
+
+function setActive(selector, isActive) {
+    selector.classList.toggle('border-yellow-400', isActive);
+    selector.classList.toggle('border-transparent', !isActive);
+}
+
+sofaSelector.addEventListener('click', function(event) {
+    event.stopPropagation();
+    const isPaletteHidden = sofaPalette.classList.contains('hidden');
+    pillowPalette.classList.add('hidden'); setActive(pillowSelector, false);
+    sofaPalette.classList.toggle('hidden'); setActive(sofaSelector, isPaletteHidden);
+    activeSelection = isPaletteHidden ? 'sofa' : null;
+    updateHighlight3D();
+});
+
+pillowSelector.addEventListener('click', function(event) {
+    event.stopPropagation();
+    const isPaletteHidden = pillowPalette.classList.contains('hidden');
+    sofaPalette.classList.add('hidden'); setActive(sofaSelector, false);
+    pillowPalette.classList.toggle('hidden'); setActive(pillowSelector, isPaletteHidden);
+    activeSelection = isPaletteHidden ? 'pillow' : null;
+    updateHighlight3D();
+});
+
+function handleTexturePicking(palette, swatch) {
+    palette.addEventListener('click', function(event) {
+        const clickedItem = event.target.closest('[data-texture]');
+        if (clickedItem) {
+            const selectedTexturePath = clickedItem.dataset.texture;
+            swatch.style.backgroundImage = `url(${selectedTexturePath})`;
+            palette.classList.add('hidden');
+            if (palette.id === 'sofa-palette') applyTextureToGroup(sofaParts, selectedTexturePath);
+            else if (palette.id === 'pillow-palette') applyTextureToGroup(pillowParts, selectedTexturePath);
+        }
+    });
+}
+
+handleTexturePicking(sofaPalette, sofaSwatch);
+handleTexturePicking(pillowPalette, pillowSwatch);
+
+window.addEventListener('click', function(event) {
+    if (!event.target.closest('#sofa-customizer-container')) {
+            sofaPalette.classList.add('hidden'); pillowPalette.classList.add('hidden');
+            setActive(sofaSelector, false); setActive(pillowSelector, false);
+            activeSelection = null; updateHighlight3D();
+    }
+});
+
+// --- KHỞI ĐỘNG ---
+init3D();

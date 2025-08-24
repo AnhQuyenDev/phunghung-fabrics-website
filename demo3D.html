@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sofa Customizer - Dual Controls</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: sans-serif; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-white">
+
+    <div class="text-center py-12 px-4">
+        <h1 class="text-4xl font-bold text-slate-800 tracking-wide">VIEW OUR COLLECTIONS</h1>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+            Browse our beautiful collections and create your own designer looks with an assortment of jacquards, dobbies, stripes and solids.
+        </p>
+    </div>
+
+    <div class="w-full max-w-6xl mx-auto px-4 flex justify-between border-b">
+        <div class="flex gap-8">
+            <button id="mode-design-btn" class="py-2 text-sm font-semibold border-b-2 border-slate-800 text-slate-800">DESIGN SELECTOR</button>
+            <button id="mode-compare-btn" class="py-2 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-slate-800">COMPARE FABRICS</button>
+        </div>
+    </div>
+
+    <section id="sofa-customizer-container" class="relative w-full max-w-6xl mx-auto mt-4 mb-8">
+        <canvas id="bg-canvas" class="w-full h-auto aspect-video rounded-lg shadow-lg bg-gray-200"></canvas>
+        <div id="compare-slider" class="absolute top-0 bottom-0 w-1 bg-white/60 cursor-ew-resize hidden z-20" style="left: 50%;">
+            <div class="absolute top-1/2 -translate-y-1/2 -left-4 w-9 h-9 rounded-full bg-white shadow-lg flex items-center justify-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>
+            </div>
+        </div>
+
+        <div id="ui-controls-wrapper" class="absolute bottom-4 left-4 right-4 z-10 flex justify-center">
+            
+            <div id="controls-left" class="relative font-sans">
+                <div class="flex gap-3 p-2 bg-white/90 backdrop-blur-md rounded-xl shadow-lg">
+                    <div id="pillow-selector-left" class="flex items-center gap-2 py-2 px-3 bg-white border-2 border-transparent rounded-lg shadow-sm cursor-pointer">
+                        <img src="public/images/Outdura_ Our Collections/Pikto Kissen.e0a9a80d0304eb153255.png" class="w-6 h-6">
+                        <div id="pillow-swatch-left" class="w-20 h-8 bg-gray-100 border rounded-md bg-cover bg-center"></div>
+                    </div>
+                    <div id="sofa-selector-left" class="flex items-center gap-2 py-2 px-3 bg-white border-2 border-transparent rounded-lg shadow-sm cursor-pointer">
+                        <img src="public/images/Outdura_ Our Collections/sofaicon.png" class="w-6 h-6">
+                        <div id="sofa-swatch-left" class="w-20 h-8 bg-gray-100 border rounded-md bg-cover bg-center"></div>
+                    </div>
+                </div>
+                <div id="sofa-palette-left" class="absolute bottom-full mb-2.5 left-0 w-80 p-3 bg-white rounded-lg shadow-xl z-10 hidden"><div class="grid grid-cols-6 gap-2.5"></div></div>
+                <div id="pillow-palette-left" class="absolute bottom-full mb-2.5 left-0 w-80 p-3 bg-white rounded-lg shadow-xl z-10 hidden"><div class="grid grid-cols-6 gap-2.5"></div></div>
+            </div>
+
+            <div id="controls-right" class="relative font-sans hidden">
+                <div class="flex gap-3 p-2 bg-white/90 backdrop-blur-md rounded-xl shadow-lg">
+                    <div id="pillow-selector-right" class="flex items-center gap-2 py-2 px-3 bg-white border-2 border-transparent rounded-lg shadow-sm cursor-pointer">
+                        <img src="public/images/Outdura_ Our Collections/Pikto Kissen.e0a9a80d0304eb153255.png" class="w-6 h-6">
+                        <div id="pillow-swatch-right" class="w-20 h-8 bg-gray-100 border rounded-md bg-cover bg-center"></div>
+                    </div>
+                    <div id="sofa-selector-right" class="flex items-center gap-2 py-2 px-3 bg-white border-2 border-transparent rounded-lg shadow-sm cursor-pointer">
+                        <img src="public/images/Outdura_ Our Collections/sofaicon.png" class="w-6 h-6">
+                        <div id="sofa-swatch-right" class="w-20 h-8 bg-gray-100 border rounded-md bg-cover bg-center"></div>
+                    </div>
+                </div>
+                <div id="sofa-palette-right" class="absolute bottom-full mb-2.5 right-0 w-80 p-3 bg-white rounded-lg shadow-xl z-10 hidden"><div class="grid grid-cols-6 gap-2.5"></div></div>
+                <div id="pillow-palette-right" class="absolute bottom-full mb-2.5 right-0 w-80 p-3 bg-white rounded-lg shadow-xl z-10 hidden"><div class="grid grid-cols-6 gap-2.5"></div></div>
+            </div>
+
+        </div>
+    </section>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+        const fabricFiles = ['2131.jpg', '0520.jpg', '0526.jpg', '0839.jpg', '1315.jpg', '1317.jpg', '1320.jpg', '1324.jpg', '1327.jpg', '1328.jpg', '1329.jpg', '1330.jpg', '1331.jpg', '1510.jpg', '1513.jpg', '1702.jpg', '1706.jpg', '1710.jpg', '1713.jpg', '1718.jpg', '1723.jpg', '1726.jpg', '1728.jpg', '1732.jpg', '1743.jpg', '1753.jpg', '1904.jpg', '1905.jpg', '1911.jpg', '1919.jpg', '1923.jpg', '1929.jpg', '2663.jpg', '2664.jpg', '2665.jpg', '2666.jpg', '2667.jpg', '2668.jpg', '2669.jpg', '2670.jpg', '2671.jpg', '3274.jpg', '3715.jpg', '3717.jpg', '3816.jpg', '3817.jpg', '3818.jpg', '3819.jpg', '3820.jpg', '3821.jpg', '3822.jpg', '5401.jpg', '5402.jpg', '5403.jpg', '5404.jpg', '5405.jpg', '5407.jpg', '5409.jpg', '5410.jpg', '5411.jpg', '5412.jpg', '5413.jpg', '5414.jpg', '5415.jpg', '5420.jpg', '5426.jpg', '5432.jpg', '11015.jpg', '11304.jpg', '11311.jpg', '11312.jpg', '11316.jpg', '11500.jpg', '11602.jpg', '11802.jpg', '11804.jpg', '12101.jpg', '12102.jpg', '12103.jpg'];
+        
+        // --- STATE & 3D VARS ---
+        let currentMode = 'design';
+        let activeSelection = { side: 'left', part: null }; // {side: 'left'/'right', part: 'sofa'/'pillow'}
+        const compareState = {
+            left: { sofaTexture: null, pillowTexture: null },
+            right: { sofaTexture: null, pillowTexture: null }
+        };
+        let sliderPosition = 0.5; let isDragging = false;
+        let scene, camera, renderer, controls;
+        const textureLoader = new THREE.TextureLoader();
+        let sofaParts = [], pillowParts = [];
+
+        // --- UI ELEMENTS ---
+        const customizerContainer = document.getElementById('sofa-customizer-container');
+        const canvas = customizerContainer.querySelector('#bg-canvas');
+        const compareSlider = customizerContainer.querySelector('#compare-slider');
+        const modeDesignBtn = document.getElementById('mode-design-btn');
+        const modeCompareBtn = document.getElementById('mode-compare-btn');
+        const uiWrapper = document.getElementById('ui-controls-wrapper');
+        const controlsLeft = document.getElementById('controls-left');
+        const controlsRight = document.getElementById('controls-right');
+
+        // --- 3D LOGIC ---
+        function init3D() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xdde2e8);
+            const canvas = customizerContainer.querySelector('#bg-canvas');
+            camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.set(-1.5, 1.5, 4);
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.setScissorTest(false);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 7.5);
+            scene.add(directionalLight);
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.target.set(0, 0.5, 0);
+            const loader = new GLTFLoader();
+            loader.load('public/sofa_pillow.glb', (gltf) => {
+                const model = gltf.scene;
+                scene.add(model);
+                const specificSofaNames = ['Material2040', 'Material2039', 'Material2038', 'Material2045', 'Material2046'];
+                model.traverse(child => {
+                    if (child.isMesh) {
+                        child.material = child.material.clone();
+                        if (specificSofaNames.includes(child.name)) sofaParts.push(child);
+                        else if (child.name.startsWith('Object_8')) pillowParts.push(child);
+                    }
+                });
+                // Set default textures
+                applyTexture('sofa', '/public/images/fabrics/11304.jpg');
+                applyTexture('pillow', '/public/images/fabrics/1315.jpg');
+            });
+            new ResizeObserver(onCanvasResize).observe(canvas);
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            const canvas = renderer.domElement;
+
+            if (currentMode === 'design') {
+                renderer.setScissorTest(false);
+                renderer.render(scene, camera);
+            } else { // Chế độ 'compare'
+                renderer.setScissorTest(true);
+                const splitX = Math.floor(sliderPosition * canvas.clientWidth);
+
+                // --- Render BÊN TRÁI ---
+                applyTexturesForSide('left');
+                renderer.setScissor(0, 0, splitX, canvas.clientHeight);
+                renderer.render(scene, camera);
+
+                // --- Render BÊN PHẢI (ĐÃ SỬA LỖI) ---
+                applyTexturesForSide('right');
+                // Chiều rộng đúng là canvas.clientWidth - splitX
+                renderer.setScissor(splitX, 0, canvas.clientWidth - splitX, canvas.clientHeight);
+                renderer.render(scene, camera);
+            }
+        }
+
+        function onCanvasResize() {
+            const canvas = renderer.domElement;
+            camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+        }
+        
+        // --- UI & TEXTURE LOGIC ---
+        function applyTextureToPart(part, texturePath) { 
+            if (!texturePath) return;
+            const partsGroup = part === 'sofa' ? sofaParts : pillowParts;
+            const swatch = part === 'sofa' ? sofaSwatch : pillowSwatch;
+            textureLoader.load(texturePath, texture => {
+                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.set(5, 5);
+                texture.encoding = THREE.sRGBEncoding;
+                partsGroup.forEach(child => {
+                    child.material.map = texture;
+                    child.material.needsUpdate = true;
+                });
+            });
+            if (swatch) swatch.style.backgroundImage = `url(${texturePath})`; 
+        }
+
+        function applyTexturesForSide(side) {
+            applyTextureToPart('sofa', compareState[side].sofaTexture);
+            applyTextureToPart('pillow', compareState[side].pillowTexture);
+        }
+
+        function updateSwatch(side, part, texturePath) {
+            const swatch = document.getElementById(`${part}-swatch-${side}`);
+            if (swatch) swatch.style.backgroundImage = `url(${texturePath})`;
+        }
+        
+        function setupUIWidget(side) {
+            const sofaSelector = document.getElementById(`sofa-selector-${side}`);
+            const pillowSelector = document.getElementById(`pillow-selector-${side}`);
+            const sofaPalette = document.getElementById(`sofa-palette-${side}`);
+            const pillowPalette = document.getElementById(`pillow-palette-${side}`);
+
+            sofaSelector.addEventListener('click', e => {
+                e.stopPropagation();
+                activeSelection = { side, part: 'sofa' };
+                pillowPalette.classList.add('hidden');
+                sofaPalette.classList.toggle('hidden');
+                // Highlight logic...
+            });
+
+            pillowSelector.addEventListener('click', e => {
+                e.stopPropagation();
+                activeSelection = { side, part: 'pillow' };
+                sofaPalette.classList.add('hidden');
+                pillowPalette.classList.toggle('hidden');
+                // Highlight logic...
+            });
+
+            const handlePicking = (event) => {
+                const item = event.target.closest('[data-texture]');
+                if (!item) return;
+                const path = item.dataset.texture;
+
+                if (currentMode === 'design') {
+                    compareState.left[activeSelection.part + 'Texture'] = path;
+                    applyTexturesForSide('left');
+                    updateSwatch('left', activeSelection.part, path);
+                } else { // Compare mode
+                    compareState[side][activeSelection.part + 'Texture'] = path;
+                    applyTexturesForSide(side);
+                    updateSwatch(side, activeSelection.part, path);
+                }
+                sofaPalette.classList.add('hidden');
+                pillowPalette.classList.add('hidden');
+            };
+
+            sofaPalette.addEventListener('click', handlePicking);
+            pillowPalette.addEventListener('click', handlePicking);
+        }
+
+        function populatePalettes() {
+             const paletteItemsHTML = fabricFiles.map(file => {
+                const path = `/public/images/fabrics/${file}`;
+                return `<div class="w-10 h-10 rounded-full cursor-pointer border-2 border-gray-100 bg-cover bg-center" data-texture="${path}" style="background-image: url(${path});"></div>`;
+            }).join('');
+            
+            ['left', 'right'].forEach(side => {
+                document.querySelector(`#sofa-palette-${side} .grid`).innerHTML = paletteItemsHTML;
+                document.querySelector(`#pillow-palette-${side} .grid`).innerHTML = paletteItemsHTML;
+            });
+        }
+        
+        // --- EVENT LISTENERS ---
+        modeDesignBtn.addEventListener('click', () => {
+            currentMode = 'design';
+            compareSlider.classList.add('hidden');
+            controlsRight.classList.add('hidden');
+            uiWrapper.classList.add('justify-center');
+            uiWrapper.classList.remove('justify-between');
+            
+            modeDesignBtn.classList.add('border-slate-800', 'text-slate-800');
+            modeCompareBtn.classList.remove('border-slate-800', 'text-slate-800');
+            
+            applyTexturesForSide('left');
+        });
+
+        modeCompareBtn.addEventListener('click', () => {
+            currentMode = 'compare';
+            
+            // Lấy trạng thái hiện tại làm bên trái
+            compareState.left.sofaTexture = document.getElementById('sofa-swatch-left').style.backgroundImage.slice(5, -2);
+            compareState.left.pillowTexture = document.getElementById('pillow-swatch-left').style.backgroundImage.slice(5, -2);
+            
+            // Đặt trạng thái mặc định hoặc đã có cho bên phải
+            if (!compareState.right.sofaTexture) {
+                compareState.right.sofaTexture = '/public/images/fabrics/3816.jpg';
+                compareState.right.pillowTexture = '/public/images/fabrics/5401.jpg';
+            }
+            updateSwatch('right', 'sofa', compareState.right.sofaTexture);
+            updateSwatch('right', 'pillow', compareState.right.pillowTexture);
+
+            compareSlider.classList.remove('hidden');
+
+            controlsRight.classList.remove('hidden');
+            uiWrapper.classList.remove('justify-center');
+            uiWrapper.classList.add('justify-between');
+
+            modeCompareBtn.classList.add('border-slate-800', 'text-slate-800');
+            modeDesignBtn.classList.remove('border-slate-800', 'text-slate-800');
+        });
+        
+        compareSlider.addEventListener('mousedown', () => { isDragging = true; });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+        window.addEventListener('mousemove', (event) => {  
+            if (!isDragging) return;
+            const rect = customizerContainer.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            sliderPosition = Math.max(0, Math.min(1, x / rect.width));
+            compareSlider.style.left = `${sliderPosition * 100}%`; 
+        });
+        
+        // --- INIT ---
+        populatePalettes();
+        setupUIWidget('left');
+        setupUIWidget('right');
+        init3D();
+    </script>
+</body>
+</html>
