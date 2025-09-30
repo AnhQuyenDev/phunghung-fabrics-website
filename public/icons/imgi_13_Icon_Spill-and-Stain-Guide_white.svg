@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/" id="Ebene_1" data-name="Ebene 1" version="1.1" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M327.6,377.4c-47.3,30.5-111,25.1-152.4-16.3s-47.7-124.9,0-172.6c47.7-47.7,124.9-47.7,172.6,0,41.4,41.4,46.8,105.1,16.3,152.4l80.2,80.2v-235.8L258.9,0H82.7c-14.8,0-26.9,12.1-26.9,26.9v446.2c0,14.8,12.1,26.9,26.9,26.9h334.7c8.9,0,16.8-4.4,21.7-11.1l-111.5-111.5Z"></path>
+  <circle class="cls-1" cx="261.5" cy="274.8" r="76.6"></circle>
+  <metadata></metadata>
+</svg>
